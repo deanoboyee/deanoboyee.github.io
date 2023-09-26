@@ -1,29 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Changing Shape</title>
+    <title>Changing Shapes</title>
     <style>
-        #shape {
+        .shape {
             width: 100px;
             height: 100px;
-            background-color: red;
-            transition: background-color 1s;
+            margin: 10px;
+            display: inline-block;
         }
     </style>
 </head>
 <body>
-    <div id="shape"></div>
+    <div id="shapes-container">
+        <!-- Shapes will be added here using JavaScript -->
+    </div>
 
     <script>
-        function changeColor() {
-            var shape = document.getElementById("shape");
-            var colors = ["red", "green", "blue", "yellow", "purple"];
+        var colors = ["red", "green", "blue", "yellow", "purple"];
+        
+        function createShape(color) {
+            var shape = document.createElement("div");
+            shape.className = "shape";
+            shape.style.backgroundColor = color;
+            return shape;
+        }
+
+        function changeColor(shape) {
             var currentColor = shape.style.backgroundColor;
             var newIndex = (colors.indexOf(currentColor) + 1) % colors.length;
             shape.style.backgroundColor = colors[newIndex];
         }
 
-        setInterval(changeColor, 1000); // Change color every 1 second (1000 milliseconds)
+        var shapesContainer = document.getElementById("shapes-container");
+
+        for (var i = 0; i < 100; i++) {
+            var randomColor = colors[Math.floor(Math.random() * colors.length)];
+            var shape = createShape(randomColor);
+            shapesContainer.appendChild(shape);
+
+            setInterval(function () {
+                changeColor(shape);
+            }, 1000);
+        }
     </script>
 </body>
 </html>
+
