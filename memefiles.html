@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Changing Shapes</title>
+    <title>Changing Shapes and Colors</title>
     <style>
         .shape {
             width: 100px;
@@ -53,25 +53,25 @@
             );
         }
 
-        .circle {
-            background-color: purple;
-            border-radius: 50%;
-        }
+        /* Add styles for additional shapes here */
 
-        .octagon {
-            background-color: orange;
-            clip-path: polygon(
-                15% 0%, 85% 0%, 100% 15%, 100% 85%,
-                85% 100%, 15% 100%, 0% 85%, 0% 15%
-            );
-        }
-
-        .book {
-            background-color: pink;
-            clip-path: polygon(
-                0% 0%, 100% 0%, 100% 100%, 60% 100%,
-                50% 80%, 40% 100%, 0% 100%
-            );
+        /* Random color animation */
+        @keyframes colorChange {
+            0% {
+                background-color: red;
+            }
+            25% {
+                background-color: green;
+            }
+            50% {
+                background-color: blue;
+            }
+            75% {
+                background-color: yellow;
+            }
+            100% {
+                background-color: purple;
+            }
         }
     </style>
 </head>
@@ -81,7 +81,8 @@
     </div>
 
     <script>
-        var shapes = ["cube", "triangle", "heart", "star", "circle", "octagon", "book"];
+        var shapes = ["cube", "triangle", "heart", "star"]; // Add more shapes as needed
+        var colors = ["red", "green", "blue", "yellow", "purple"];
 
         function createShape(shapeClass) {
             var shape = document.createElement("div");
@@ -89,25 +90,33 @@
             return shape;
         }
 
-        function changeShape(shape) {
-            var currentClass = shape.className;
+        function changeShapeAndColor(shape) {
+            var currentShape = shape.className.split(" ")[1];
             var newShape = shapes[Math.floor(Math.random() * shapes.length)];
+            var newColor = colors[Math.floor(Math.random() * colors.length)];
 
             // Remove the previous shape class and add the new one
-            shape.className = currentClass.replace(/(cube|triangle|heart|star|circle|octagon|book)/, newShape);
+            shape.className = "shape " + newShape;
+
+            // Change the background color with random timing
+            var randomColorChangeTime = Math.floor(Math.random() * 3000) + 1000; // 1 to 3 seconds
+            setTimeout(function () {
+                shape.style.animation = "colorChange 2s infinite";
+            }, randomColorChangeTime);
         }
 
         var shapesContainer = document.getElementById("shapes-container");
 
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < 105; i++) {
             var randomShape = shapes[Math.floor(Math.random() * shapes.length)];
             var shape = createShape(randomShape);
             shapesContainer.appendChild(shape);
 
             setInterval(function () {
-                changeShape(shape);
-            }, 1000);
+                changeShapeAndColor(shape);
+            }, Math.floor(Math.random() * 4000) + 1000); // 1 to 5 seconds
         }
     </script>
 </body>
 </html>
+
