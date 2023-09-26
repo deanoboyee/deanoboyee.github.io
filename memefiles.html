@@ -9,6 +9,70 @@
             margin: 10px;
             display: inline-block;
         }
+
+        .cube {
+            background-color: red;
+            transform: rotateX(0deg) rotateY(0deg);
+        }
+
+        .triangle {
+            background-color: green;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
+        .heart {
+            background-color: blue;
+            position: relative;
+            width: 100px;
+            height: 90px;
+            transform: rotate(-45deg);
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 52px;
+            height: 80px;
+            background-color: blue;
+            border-radius: 50px 50px 0 0;
+        }
+
+        .heart::before {
+            left: 50px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .star {
+            background-color: yellow;
+            clip-path: polygon(
+                50% 0%, 61.8% 38.2%, 100% 50%, 61.8% 61.8%,
+                50% 100%, 38.2% 61.8%, 0% 50%, 38.2% 38.2%
+            );
+        }
+
+        .circle {
+            background-color: purple;
+            border-radius: 50%;
+        }
+
+        .octagon {
+            background-color: orange;
+            clip-path: polygon(
+                15% 0%, 85% 0%, 100% 15%, 100% 85%,
+                85% 100%, 15% 100%, 0% 85%, 0% 15%
+            );
+        }
+
+        .book {
+            background-color: pink;
+            clip-path: polygon(
+                0% 0%, 100% 0%, 100% 100%, 60% 100%,
+                50% 80%, 40% 100%, 0% 100%
+            );
+        }
     </style>
 </head>
 <body>
@@ -17,33 +81,33 @@
     </div>
 
     <script>
-        var colors = ["red", "green", "blue", "yellow", "purple"];
-        
-        function createShape(color) {
+        var shapes = ["cube", "triangle", "heart", "star", "circle", "octagon", "book"];
+
+        function createShape(shapeClass) {
             var shape = document.createElement("div");
-            shape.className = "shape";
-            shape.style.backgroundColor = color;
+            shape.className = "shape " + shapeClass;
             return shape;
         }
 
-        function changeColor(shape) {
-            var currentColor = shape.style.backgroundColor;
-            var newIndex = (colors.indexOf(currentColor) + 1) % colors.length;
-            shape.style.backgroundColor = colors[newIndex];
+        function changeShape(shape) {
+            var currentClass = shape.className;
+            var newShape = shapes[Math.floor(Math.random() * shapes.length)];
+
+            // Remove the previous shape class and add the new one
+            shape.className = currentClass.replace(/(cube|triangle|heart|star|circle|octagon|book)/, newShape);
         }
 
         var shapesContainer = document.getElementById("shapes-container");
 
-        for (var i = 0; i < 100; i++) {
-            var randomColor = colors[Math.floor(Math.random() * colors.length)];
-            var shape = createShape(randomColor);
+        for (var i = 0; i < 5; i++) {
+            var randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+            var shape = createShape(randomShape);
             shapesContainer.appendChild(shape);
 
             setInterval(function () {
-                changeColor(shape);
+                changeShape(shape);
             }, 1000);
         }
     </script>
 </body>
 </html>
-
