@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Changing Shape</title>
+    <style>
+        #shape {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            transition: background-color 1s;
+        }
+    </style>
+</head>
+<body>
+    <div id="shape"></div>
+
+    <script>
+        function changeColor() {
+            var shape = document.getElementById("shape");
+            var colors = ["red", "green", "blue", "yellow", "purple"];
+            var currentColor = shape.style.backgroundColor;
+            var newIndex = (colors.indexOf(currentColor) + 1) % colors.length;
+            shape.style.backgroundColor = colors[newIndex];
+        }
+
+        setInterval(changeColor, 1000); // Change color every 1 second (1000 milliseconds)
+    </script>
+</body>
+</html>
